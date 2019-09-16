@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Smart Image Loader</title>
+  </head>
+  <body>
+
+    <!-- Only use .JPG      .GIF          .PNG  -->
+    <img width="600" id="logo" src="" alt="https://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_India.png">
+
+ 
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script>
+      //==> insert value in Localstorage
+      // window.localStorage.setItem('logo', 'abcabc.....');
+
+      //==> get value stored in localstorage
+      // document.write(localStorage.getItem('logo'));
+
+
+      //==> Remove From Local Storage
+      // localStorage.removeItem('logo');
+      
+
+      //==> Website Version
+      var version = "2";
+      var current_version = localStorage.getItem('version');
+      if(version == current_version){
+                //==> if version same to same
+                //==> Check if localStorage is Available or Not
+      if (localStorage.getItem('logo') != null){
+          var logo = localStorage.getItem('logo');
+          $('#logo').attr('src', logo);
+          alert ("logo value stored and show image");
+          
+      }else{
+          alert ("logo not in localstorage");
+          alert ("We convert your image to base64 and insert in local storage");
+          var logo = $("#logo").attr("alt");
+          $('#logo').attr('src', logo);
+          
+        //==> Image to Base64
+     function toDataURL(src, callback) {
+            var image = new Image();
+            image.crossOrigin = 'Anonymous';
+        
+            image.onload = function() {
+                var canvas = document.createElement('canvas');
+                var context = canvas.getContext('2d');
+                canvas.height = this.naturalHeight;
+                canvas.width = this.naturalWidth;
+                context.drawImage(this, 0, 0);
+                var dataURL = canvas.toDataURL('image/jpeg');
+                callback(dataURL);
+            };
+
+            image.src = src;
+        }
+
+        //==> image to base64 and insert in local storage
+        toDataURL(logo, function(dataURL){
+            window.localStorage.setItem('logo', dataURL);
+            alert('successfuly store in localstorage');
+        });
+
+
+      }
+      }else{
+        //==> if version not same to same
+        //==> remove old data and insert new data
+        localStorage.removeItem('logo');
+        localStorage.removeItem('version');
+        alert('remove all data from localstorage');
+
+        // //==> version insert in Locat storage
+        // window.localStorage.setItem('version', version);
+
+        if (localStorage.getItem('logo') != null){
+          var logo = localStorage.getItem('logo');
+          $('#logo').attr('src', logo);
+          alert ("yes");
+          
+      }else{
+          alert ("no");
+          var logo = $("#logo").attr("alt");
+          $('#logo').attr('src', logo);
+          
+    //==> Image to Base64
+     function toDataURL(src, callback) {
+            var image = new Image();
+            image.crossOrigin = 'Anonymous';
+        
+            image.onload = function() {
+                var canvas = document.createElement('canvas');
+                var context = canvas.getContext('2d');
+                canvas.height = this.naturalHeight;
+                canvas.width = this.naturalWidth;
+                context.drawImage(this, 0, 0);
+                var dataURL = canvas.toDataURL('image/jpeg');
+                callback(dataURL);
+            };
+
+            image.src = src;
+        }
+
+        toDataURL(logo, function(dataURL){
+            window.localStorage.setItem('version', version);
+            window.localStorage.setItem('logo', dataURL);
+        });
+
+
+      }
+
+      }
+
+
+       
+
+  </script>
+  </body>
+</html>
